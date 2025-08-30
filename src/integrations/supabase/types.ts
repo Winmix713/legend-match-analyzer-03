@@ -80,6 +80,63 @@ export type Database = {
         }
         Relationships: []
       }
+      match_predictions: {
+        Row: {
+          away_team: string
+          cache_key: string | null
+          confidence: number
+          created_at: string | null
+          home_team: string
+          id: string
+          league: string | null
+          match_date: string | null
+          match_id: number | null
+          model_ensemble: string[] | null
+          predicted_score: Json | null
+          prediction_method: string | null
+          probabilities: Json
+          recommendations: string[] | null
+          risk_level: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          away_team: string
+          cache_key?: string | null
+          confidence?: number
+          created_at?: string | null
+          home_team: string
+          id?: string
+          league?: string | null
+          match_date?: string | null
+          match_id?: number | null
+          model_ensemble?: string[] | null
+          predicted_score?: Json | null
+          prediction_method?: string | null
+          probabilities: Json
+          recommendations?: string[] | null
+          risk_level?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          away_team?: string
+          cache_key?: string | null
+          confidence?: number
+          created_at?: string | null
+          home_team?: string
+          id?: string
+          league?: string | null
+          match_date?: string | null
+          match_id?: number | null
+          model_ensemble?: string[] | null
+          predicted_score?: Json | null
+          prediction_method?: string | null
+          probabilities?: Json
+          recommendations?: string[] | null
+          risk_level?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       matches: {
         Row: {
           attendance: number | null
@@ -89,6 +146,8 @@ export type Database = {
           away_shots_on_target: number | null
           away_team: string
           away_yellow_cards: number | null
+          btts_computed: boolean | null
+          comeback_computed: boolean | null
           created_at: string | null
           full_time_away_goals: number
           full_time_home_goals: number
@@ -105,6 +164,7 @@ export type Database = {
           match_status: Database["public"]["Enums"]["match_status_enum"] | null
           match_time: string
           referee: string | null
+          result_computed: string | null
           season: string | null
           updated_at: string | null
           venue: string | null
@@ -117,6 +177,8 @@ export type Database = {
           away_shots_on_target?: number | null
           away_team: string
           away_yellow_cards?: number | null
+          btts_computed?: boolean | null
+          comeback_computed?: boolean | null
           created_at?: string | null
           full_time_away_goals: number
           full_time_home_goals: number
@@ -133,6 +195,7 @@ export type Database = {
           match_status?: Database["public"]["Enums"]["match_status_enum"] | null
           match_time: string
           referee?: string | null
+          result_computed?: string | null
           season?: string | null
           updated_at?: string | null
           venue?: string | null
@@ -145,6 +208,8 @@ export type Database = {
           away_shots_on_target?: number | null
           away_team?: string
           away_yellow_cards?: number | null
+          btts_computed?: boolean | null
+          comeback_computed?: boolean | null
           created_at?: string | null
           full_time_away_goals?: number
           full_time_home_goals?: number
@@ -161,9 +226,76 @@ export type Database = {
           match_status?: Database["public"]["Enums"]["match_status_enum"] | null
           match_time?: string
           referee?: string | null
+          result_computed?: string | null
           season?: string | null
           updated_at?: string | null
           venue?: string | null
+        }
+        Relationships: []
+      }
+      model_performance: {
+        Row: {
+          accuracy_percentage: number | null
+          auc_roc: number | null
+          avg_confidence: number | null
+          avg_probability_accuracy: number | null
+          correct_predictions: number | null
+          created_at: string | null
+          evaluation_period_end: string | null
+          evaluation_period_start: string | null
+          f1_score: number | null
+          id: string
+          last_30_days_accuracy: number | null
+          last_7_days_accuracy: number | null
+          model_name: string
+          model_type: string
+          precision: number | null
+          recall: number | null
+          team_name: string | null
+          total_predictions: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          accuracy_percentage?: number | null
+          auc_roc?: number | null
+          avg_confidence?: number | null
+          avg_probability_accuracy?: number | null
+          correct_predictions?: number | null
+          created_at?: string | null
+          evaluation_period_end?: string | null
+          evaluation_period_start?: string | null
+          f1_score?: number | null
+          id?: string
+          last_30_days_accuracy?: number | null
+          last_7_days_accuracy?: number | null
+          model_name: string
+          model_type: string
+          precision?: number | null
+          recall?: number | null
+          team_name?: string | null
+          total_predictions?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          accuracy_percentage?: number | null
+          auc_roc?: number | null
+          avg_confidence?: number | null
+          avg_probability_accuracy?: number | null
+          correct_predictions?: number | null
+          created_at?: string | null
+          evaluation_period_end?: string | null
+          evaluation_period_start?: string | null
+          f1_score?: number | null
+          id?: string
+          last_30_days_accuracy?: number | null
+          last_7_days_accuracy?: number | null
+          model_name?: string
+          model_type?: string
+          precision?: number | null
+          recall?: number | null
+          team_name?: string | null
+          total_predictions?: number | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -194,6 +326,42 @@ export type Database = {
           id?: number
           matches_processed?: number
           memory_usage?: number | null
+        }
+        Relationships: []
+      }
+      prediction_history: {
+        Row: {
+          actual_result: string | null
+          actual_score: Json | null
+          confidence_was_justified: boolean | null
+          created_at: string | null
+          error_margin: number | null
+          evaluated_at: string | null
+          id: string
+          prediction_id: string
+          was_correct: boolean | null
+        }
+        Insert: {
+          actual_result?: string | null
+          actual_score?: Json | null
+          confidence_was_justified?: boolean | null
+          created_at?: string | null
+          error_margin?: number | null
+          evaluated_at?: string | null
+          id?: string
+          prediction_id: string
+          was_correct?: boolean | null
+        }
+        Update: {
+          actual_result?: string | null
+          actual_score?: Json | null
+          confidence_was_justified?: boolean | null
+          created_at?: string | null
+          error_margin?: number | null
+          evaluated_at?: string | null
+          id?: string
+          prediction_id?: string
+          was_correct?: boolean | null
         }
         Relationships: []
       }
@@ -299,6 +467,51 @@ export type Database = {
         }
         Relationships: []
       }
+      season_predictions: {
+        Row: {
+          completed_at: string | null
+          created_at: string | null
+          error_message: string | null
+          id: string
+          league: string | null
+          processed_matches: number | null
+          progress_percentage: number | null
+          results: Json | null
+          season: string
+          started_at: string | null
+          status: string
+          total_matches: number | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          league?: string | null
+          processed_matches?: number | null
+          progress_percentage?: number | null
+          results?: Json | null
+          season: string
+          started_at?: string | null
+          status?: string
+          total_matches?: number | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          league?: string | null
+          processed_matches?: number | null
+          progress_percentage?: number | null
+          results?: Json | null
+          season?: string
+          started_at?: string | null
+          status?: string
+          total_matches?: number | null
+        }
+        Relationships: []
+      }
       system_logs: {
         Row: {
           correlation_id: string | null
@@ -347,6 +560,66 @@ export type Database = {
           updated_at?: string | null
           user_id?: string | null
           version?: string | null
+        }
+        Relationships: []
+      }
+      team_models: {
+        Row: {
+          accuracy: number | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_trained: string | null
+          model_data: Json | null
+          model_type: string
+          team_name: string
+          training_matches: number | null
+          updated_at: string | null
+          version: string | null
+        }
+        Insert: {
+          accuracy?: number | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_trained?: string | null
+          model_data?: Json | null
+          model_type: string
+          team_name: string
+          training_matches?: number | null
+          updated_at?: string | null
+          version?: string | null
+        }
+        Update: {
+          accuracy?: number | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_trained?: string | null
+          model_data?: Json | null
+          model_type?: string
+          team_name?: string
+          training_matches?: number | null
+          updated_at?: string | null
+          version?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          role?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -475,6 +748,19 @@ export type Database = {
           resilience_factor_away?: number | null
           resilience_factor_home?: number | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      team_form_analysis: {
+        Row: {
+          avg_goals_conceded: number | null
+          avg_goals_scored: number | null
+          btts_lower_ci: number | null
+          btts_percentage: number | null
+          btts_std_dev: number | null
+          btts_upper_ci: number | null
+          team_name: string | null
+          total_matches: number | null
         }
         Relationships: []
       }
